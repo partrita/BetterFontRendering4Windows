@@ -1,65 +1,96 @@
-# smooth-fonts-Windows
+Windows에서 Mac과 비슷한 부드러운 폰트 적용하기
 
-How to get Mac-like smooth fonts on Windows 11/10
+이 가이드는 Windows 11/10에서 Mac OS와 유사한 부드러운 폰트 렌더링을 구현하는 방법을 설명합니다. 주로 레지스트리 편집과 MacType이라는 서드파티 프로그램을 활용합니다.
 
-- https://gigglehd.com/gg/soft/12183718
+![](./preview_font.png)
 
-# How to?
+# 기본 설정 방법
 
-1. 시작 메뉴에서 실행을 눌러 regedit를 실행합니다.
-2. `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes`에 들어갑니다.
-3. 빈 곳에 마우스 우클릭을 하고 다음의 문자열 값을 추가하고 값을 전부 `원하는 폰트명`으로 만들어줍니다:
-   - Arial, Gulim, GulimChe, Segoe UI, Malgun Gothic
-4. 오타가 발생하지 않았는지 제대로 확인 하신 후 재부팅을 합니다.
-5. 이제 시스템 언어 대부분이 `원하는 폰트명`으로 바뀌어 있을 겁니다.
+1. 시작 메뉴에서 "실행"을 검색하여 실행하거나 Windows 키 + `R`을 눌러 실행 창을 엽니다.
+2. 실행 창에 "regedit"를 입력하고 확인을 클릭하여 레지스트리 편집기를 실행합니다.
+3. 다음 경로로 이동합니다: 
+   `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes`
+4. 해당 위치에서 우클릭하여 새로 만들기 > 문자열 값을 선택합니다.
+5. 다음 항목들을 새 문자열 값으로 추가하고, 각각의 값을 원하는 폰트 이름으로 설정합니다:
+   - Arial
+   - Gulim
+   - GulimChe
+   - Segoe UI
+   - Malgun Gothic
+6. 모든 값이 정확히 입력되었는지 확인한 후 컴퓨터를 재부팅합니다.
+7. 재부팅 후 시스템 전반에 걸쳐 지정한 폰트가 적용된 것을 확인할 수 있습니다.
 
-# Known bug
+# 서드파티 프로그램
+MacType과 noMeiryoUI는 Windows에서 폰트 렌더링을 개선하고 시스템 폰트를 변경하는 데 사용되는 유틸리티 프로그램입니다.
 
-간혹 시작메뉴 부분이 폰트가 바뀌질 않고 기존 윈도우 폰트들로 돌아오는 경우가 있습니다. 아마도 MacType보다 `explorer.exe`가 먼저 실행되면서 생기는 문제가 아닐까 추정되는데 이런 경우 작업관리자에서 용량 큰 `explorer.exe`를 강제 종료합니다.
-그런 다음 파일 -> 새 작업 실행에 들어가서 `explorer.exe`를 실행하면 제대로 바꾼 폰트가 적용되어서 나타나더군요. 참 아쉬운 부분이긴 하나 윈도우의 기본 파일인 `explorer`가 우선순위가 높은 만큼 이는 어쩔 수가 없는 것 같습니다.
+## MacType 사용법:
 
-# Webbrowser
+1. MacType 공식 웹사이트에서 최신 버전을 다운로드하고 설치합니다.
+2. 설치 후 MacType 설정 창이 열립니다.
+3. "프로필 선택" 탭에서 원하는 렌더링 프로필을 선택합니다 (예: LCD, 기본 등).
+4. "실행 모드" 탭에서 원하는 실행 모드를 선택합니다 (서비스 모드 권장).
+5. "적용" 버튼을 클릭하고 컴퓨터를 재시작합니다.
+6. 시스템 트레이의 MacType 아이콘을 통해 설정을 조정하거나 비활성화할 수 있습니다.
 
-크로미움 계열의 브라우저에서 보안 문제로 서드파티 DLL를 막는 경우가 있습니다. 레지스트리 모드를 사용하던 시절의 문제점이긴 하나 혹여 이런 경우로 MacType가 브라우저에서만 작동하지 않는다면 RendererCodeIntegrity 기능을 꺼야 하는데 방법은 공식적으로 두 가지가 존재합니다.
+## noMeiryoUI 사용법:
 
-1. 인터넷 브라우저의 바로가기 속성에서 바로가기 탭에 들어가 대상 끝 부분에 `--disable-features=RendererCodeIntegrity`라고 매개변수를 추가해줍니다. 하지만, 이렇게 할 경우 수정한 바로가기 파일에만 해당 사항이 적용됩니다.
-2. 아예 브라우저 자체의 `RendererCodeIntegrity`를 끄고 싶다면 아래와 같이 레지스트리를 수정합니다.
+1. noMeiryoUI 프로젝트 페이지에서 최신 버전을 다운로드합니다.
+2. 압축을 풀고 noMeiryoUI.exe를 실행합니다 (관리자 권한 필요).
+3. 프로그램 창에서 각 UI 요소 (제목 표시줄, 아이콘 제목 등)에 대해 원하는 폰트와 크기를 선택합니다.
+4. "모든 설정 변경" 버튼을 클릭하여 변경사항을 적용합니다.
+5. 변경 사항을 확인하려면 로그오프 후 다시 로그인하거나 컴퓨터를 재시작합니다.
 
-## RendererCodeIntegrity를 끄는 방법
+## 주의사항:
+- 두 프로그램 모두 시스템 설정을 변경하므로 사용 전 시스템 복원 지점을 생성하는 것이 좋습니다.
+- MacType은 일부 프로그램과 충돌할 수 있으므로, 문제 발생 시 해당 프로그램을 예외 목록에 추가하거나 MacType을 일시적으로 비활성화할 수 있습니다.
+- noMeiryoUI는 Windows의 기본 폰트 설정을 변경하므로, 시스템 안정성에 영향을 줄 수 있습니다. 변경 후 문제가 발생하면 기본 설정으로 복원할 수 있습니다.
 
-1. 시작 메뉴에서 실행을 눌러 regedit를 실행합니다.
-2. `HKEY_LOCAL_MACHINE\SOFTWARE\Policies`에 들어가 해당하는 브라우저에 맞게 아래와 같이 키를 만들어 줍니다.
+# 추천 폰트
 
+1. 고딕체 폰트 = [Pretendard](https://github.com/orioncactus/pretendard)
+2. 명조체 폰트 = [Maruburi](https://hangeul.naver.com/)
+3. 고정폭 폰트 = [Fira code nerd font](https://www.nerdfonts.com/font-downloads)
+
+
+# 알려진 문제와 해결 방법
+
+## 시작 메뉴 폰트 문제
+가끔 시작 메뉴의 폰트가 변경되지 않고 기본 Windows 폰트로 표시되는 경우가 있습니다. 이는 MacType보다 `explorer.exe`가 먼저 실행되어 발생하는 문제로 추정됩니다.
+
+해결 방법:
+1. 작업 관리자를 실행합니다 (Ctrl + Shift + Esc).
+2. 프로세스 탭에서 "Windows 탐색기" (`explorer.exe`)를 찾아 작업 끝내기를 클릭합니다.
+3. 작업 관리자의 "파일" 메뉴에서 "새 작업 실행"을 선택합니다.
+4. `explorer.exe`를 입력하고 확인을 클릭합니다.
+
+이 방법으로 변경된 폰트가 적용된 탐색기가 다시 실행됩니다.
+
+## 웹 브라우저 관련 문제
+
+크로미움 기반 브라우저(Chrome, Edge 등)에서는 보안상의 이유로 서드파티 DLL을 차단할 수 있습니다. 이로 인해 MacType이 정상 작동하지 않을 수 있습니다.
+
+해결 방법:
+1. 브라우저 바로가기 속성의 대상 끝에 `--disable-features=RendererCodeIntegrity` 추가
+2. 레지스트리 수정을 통해 브라우저의 `RendererCodeIntegrity` 기능 비활성화
+
+## Firefox 관련 설정
+
+Firefox는 일반적으로 `DirectWrite` 모드로 인해 문제가 없지만, 렌더링 불일치가 발생할 수 있습니다.
+
+해결 방법:
+1. 주소창에 `about:config` 입력
+2. `cleartype` 검색
+3. `gfx.font_rendering.cleartype_params.rendering_mode` 값을 5로 변경
+
+## Java 기반 애플리케이션
+
+Java 기반 앱에서 문제가 발생하면 해당 앱의 .ini 파일에 `clipboxfix=1`을 추가하여 해결할 수 있습니다.
+
+예시 (IntelliJ IDEA):
 ```
-크로미움은 \Chromium
-구글 크롬은 \Google\Chrome
-브레이브는 \BraveSoftware\Brave
-마이크로소프트 엣지는 \Microsoft\Edge
-네이버 웨일은 \Naver\Naver Whale
-```
-
-3. 빈 곳에 우클릭 하여 DWORD 값 만들기를 선택해 RendererCodeIntegrityEnabled라고 이름을 써주고 값을 0으로 설정해줍니다.
-4. 이제 브라우저를 실행해 policy 화면을 확인해 제대로 false라고 뜨는지 확인하면 끝입니다. policy 화면은 주소 창에 아래와 같이 입력해서 접속하면 됩니다.
-
-```
-크로미움, 구글 크롬은 chrome://policy
-마이크로소프트 엣지는 edge://policy
-네이버 웨일은 whale://policy
-```
-
-## Firefox의 경우
-
-파이어폭스에서는 일반적으로 DirectWrite 모드 덕분에 문제 없이 작동하지만, 간혹 DirectWrite의 렌더링이 MacType의 GDI와 맞지 않는 경우가 발생할 때가 있습니다. 이런 경우 버전에 따라 아래와 같은 방법을 써볼 수 있습니다.
-
-1. 파이어폭스 주소창에 about:config를 입력해 들어가세요.
-2. cleartype을 검색하세요.
-3. gfx.font_rendering.cleartype_params.rendering_mode의 값을 5로 바꾸고 저장해주세요.
-
-# JAVA 기반의 앱
-
-Java 기반 앱들에서 제대로 작동하지 않는 경우 ini 파일에 clipboxfix=1을 추가해 이를 보완할 수 있습니다. 예를 들어 개발용 프로그램인 IntelliJ IDEA의 경우 ini 파일에 다음과 같이 문구를 추가하시면 됩니다.
-
 [Experimental@idea64.exe]
 clipboxfix=1
+```
 
-레지스트리 모드를 권장하던 시절의 문제점이라 서비스 모드를 기본으로 사용하는 지금은 해당 사항이 없어야 합니다만, Secure Boot가 켜져 있을 때 문제가 발생하는 경우가 있습니다. 혹시 문제가 생겼고 Secure Boot가 필요 없으신 분은 해제해보세요. 다만, Secure Boot를 해제하는 일은 일반적으로 권장하지 않습니다.
+주의: 이 가이드에 따라 시스템을 수정할 때는 주의가 필요합니다. 레지스트리 편집이나 시스템 설정 변경은 시스템 안정성에 영향을 줄 수 있으므로, 반드시 백업을 먼저 진행하고 신중히 작업하세요.
+
